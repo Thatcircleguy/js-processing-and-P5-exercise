@@ -1,0 +1,52 @@
+// A small exercise to create a random field of dots on the screen,
+// the dots will change color depending where on the mouse postion.
+// the mouseX and mouseY have been mapped to rgb scale. 
+
+//placement
+var spot = {
+    x: 100,
+    y: 50,
+    spotSize: 0
+};
+
+//color
+var col = {
+    r: 255,
+    g: 0,
+    b: 0,
+    a: 0,
+    colR: 0,
+    colG: 0,
+    colB: 0
+};
+// needed later to calculate the diagonal
+var canvasCal = {
+    w: 1280,
+    l: 1024
+};
+
+function setup() {
+    createCanvas(canvasCal.w, canvasCal.l);
+    background(0);
+}
+
+function draw() {
+	// sets position and size randomly
+    spot.x = random(0, width);
+    spot.y = random(0, height);
+    spot.spotSize = random(0, 100);
+    //sets alpha randomly
+    col.a = random(100, 255);
+
+    // mapping red to width
+    col.colR = map(mouseX, 0, width, 0, 255);
+    // mapping green to the height
+    col.colG = map(mouseY, 0, height, 255, 0);
+    // mapping B to the postion on the diagional axis calculated by 
+    col.colB = map((mouseX * mouseY), 0, (canvasCal.l * canvasCal.w), 0, 255);
+
+    noStroke();
+    fill(col.colR, col.colG, col.colB, col.a);
+    ellipse(spot.x, spot.y, spot.spotSize, spot.spotSize);
+
+}

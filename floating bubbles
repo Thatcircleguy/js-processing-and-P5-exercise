@@ -1,0 +1,85 @@
+//inspire by dan shiffman
+
+// Using a contructor to make bubbles 
+// dependingon their starting y postion they take on a different
+// saturation of the base colour orange (255,102,0).
+
+// Later added a movement so they float to
+// the top of the screen.
+
+// empty array bubbles
+var bubbles = [];
+
+
+function setup() {
+    createCanvas(200, 800);
+}
+// creates a "new" bubble from "B"ubble construct
+//on the mouse click
+function mousePressed() {
+    bubbles.push(new Bubble(mouseX, mouseY));
+}
+// draw loop that draws as many bubbles
+// as there is in the array (which you have added)
+function draw() {
+    background(55, 65, 42);
+    for (var i = 0; i < bubbles.length; i++) {
+        bubbles[i].move();
+        bubbles[i].display();
+        //bubbles[i].stop();
+    }
+}
+
+// this is the constructor function
+// note the keyword this => it calls the x 
+//value within the contructor
+function Bubble(x, y) {
+    this.x = x;
+    this.y = y;
+
+    //assigns a value to the rgb of the contructor
+    //according to the y value.
+
+    //mapped into an orange (255,102,0) color
+    //using the saturation scale from -
+    // https://www.w3schools.com/colors/colors_picker.asp
+
+
+    //this code maps the colour/saturation to the
+    //the y postion given by the mouseclick 
+
+    this.r = map(mouseY, 0, height, 0,38);
+    this.g = map(mouseY, 0, height, 73,38);
+    this.b = map(mouseY, 0, height, 78,38);
+    this.a = map(mouseY, 0, height, 255, 100);
+
+    // for testing the rgb values in the console :)
+    // console.log(this.r);
+    // console.log(this.g);
+    // console.log(this.b);
+    // console.log(this.a);
+    console.log(this.y);
+
+    // display function for 
+    //the bubble within the construct
+    this.display = function() {
+        stroke(this.r, this.g, this.b, this.a);
+        fill(this.r, this.g, this.b, this.a);
+        ellipse(this.x, this.y, 24, 24);
+    }
+
+    // move function for 
+    //the bubble within the construct
+    this.move = function() {
+        this.x = this.x + random(-1, 1);
+        this.y = this.y + random(-1, 1);
+        // make the bubbles float up
+        if (this.y >= 12) {
+            this.y = this.y - 3;
+          
+        }
+    }
+}
+
+// note from zakari, bubbles should start small and 
+// get bigger as they go up :)
